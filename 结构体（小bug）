@@ -1,0 +1,595 @@
+#include<iostream>
+#include<iomanip>
+#include<cmath>
+#include<string>
+#include<fstream>
+#include <stdlib.h>
+
+using namespace std;
+
+int onenumber;//作为身份验证码
+int UI_Steptwo_one;
+int UI_Steptwo_two;
+
+struct student
+{
+	string s_name;
+	string s_ID;
+	string s_password;
+	string s_college;
+	int s_class;
+	bool math, english, chinese;
+	bool s_lock;//1锁定0未锁定
+}; student stu[100];
+
+struct teacher
+{
+	string t_name;
+	string t_ID;
+	string t_password;
+	string t_college;
+	int t_class;
+	bool t_lock;//1锁定0未锁定
+}; teacher tea[100];
+
+struct administrator
+{
+	string password;
+}; administrator DT;
+
+void UI_Steptwo();
+void UI_Stepthree();
+void UI_Stepfour(int i);
+void user_lock(int time, int i);
+void check_lock(int i);
+void Change_password(int i);
+
+void Read_Date() {
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt");
+	for (int i = 0; i < 100; i++)
+	{
+		in >> stu[i].s_name >> stu[i].s_ID >> stu[i].s_password >> stu[i].s_college >> stu[i].s_class >> stu[i].math >> stu[i].english >> stu[i].chinese;
+	}
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_tea.txt");
+	for (int i = 0; i < 100; i++)
+	{
+		in >> tea[i].t_name >> tea[i].t_ID >> tea[i].t_password >> tea[i].t_college >> tea[i].t_class;
+	}
+
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_Adm.txt");
+	in >> DT.password;
+	in.close();
+	in.close();
+	in.close();
+
+}//系统导入数据
+
+void Read_Lock() {
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\stu_lock.txt");
+	int a[100];
+	in >> a[0];
+	stu[a[0]].s_lock = 1;
+	in.close();
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\tea_lock.txt");
+	int b[100];
+	in >> a[0];
+	tea[a[0]].t_lock = 1;
+	in.close();
+
+}//系统读取被锁用户
+
+void Read_See_Logon() {
+	ifstream in;
+	system("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
+	cout << "Input 1 to write or input 0 to back:";
+	int mm;
+	cin >> mm;
+	if (mm == 1)
+	{
+		in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
+		for (int i = 0; i < 100; i++)
+		{
+			if (tea[i].t_ID == "x")
+				in >> tea[i].t_name >> tea[i].t_ID >> tea[i].t_password >> tea[i].t_college >> tea[i].t_class;
+		}
+		in.close();
+	}
+	else if (mm == 0)
+		return;
+}//管理员读取新用户
+
+void Show_Deblocking_Lock() {
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\stu_lock.txt");
+	int a[100];
+	in >> a[0];
+	stu[a[0]].s_lock = 0;
+	in.close();
+	ifstream trunc;
+	trunc.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\stu_lock.txt");
+	trunc.close();
+}//管理员解除锁定
+
+void UI_Stepone() {
+	cout << "===========Welcome to Course Selection System===========" << endl;
+	cout << "====Please input number in the list to select status====" << endl;
+	cout << "==================1.Teacher ============================" << endl;
+	cout << "==================2.Student ============================" << endl;
+	cout << "==================3.Administrator ======================" << endl;
+	cin >> onenumber;
+	if (onenumber != 1 && onenumber != 2 && onenumber != 3)
+	{
+		cout << "Invalid input,Check your input to continue" << endl << endl;
+		UI_Stepone();
+	}
+	UI_Steptwo();
+}//第一用户界面
+
+void UI_Steptwo() {
+	if (onenumber == 1)
+	{
+		cout << "=================Welcome you,IMU Teacher================" << endl;
+		cout << "==========Input 1 to login and Input 0 to logon=========" << endl;//1登录，0注册
+		cin >> UI_Steptwo_one;
+		if (UI_Steptwo_one != 1 && UI_Steptwo_one != 0)
+		{
+			cout << "Invalid input,Check your input to continue" << endl << endl;
+			UI_Steptwo();
+		}
+	}
+	else if (onenumber == 2)
+	{
+		cout << "================Welcome you,IMU Student================" << endl;
+		cout << "=========Input 1 to login and Input 0 to logon=========" << endl;//1登录，0注册
+		cin >> UI_Steptwo_two;
+		if (UI_Steptwo_two != 1 && UI_Steptwo_two != 0)
+		{
+			cout << "Invalid input,Check your input to continue" << endl << endl;
+			UI_Steptwo();
+		}
+	}
+	else if (onenumber == 3)//管理员
+	{
+		cout << "PASSWORD:";
+		string only;
+		cin >> only;
+		if (only == DT.password)
+		{
+			cout << "=====================Welcome back=======================" << endl;
+			cout << "============Input number in list to continue============" << endl;
+			cout << "===============1.Show new logon user====================" << endl;
+			cout << "===============2.Deblocking locked user=================" << endl;
+			cout << "===============3.Show someone information===============" << endl;
+
+			int administrator_num;
+			cin >> administrator_num;
+			if (administrator_num == 1)
+			{
+				cout << endl << "Check information and write in the system" << endl;
+				Read_See_Logon();
+				cout << "Input 1 to back main menu:";
+				int key_1;
+				cin >> key_1;
+				if (key_1 == 1)
+					UI_Stepone();
+
+			}
+			else if (administrator_num == 2)
+			{
+				Show_Deblocking_Lock();
+				cout << "Input 1 to back main menu:";
+				int key_2;
+				cin >> key_2;
+				if (key_2 == 1)
+					UI_Stepone();
+			}
+			else if (administrator_num == 3)
+			{
+				cout << "Input want show teacher or student name,ID,college;";
+				string unknow_information;
+				cin >> unknow_information;
+				cout << "Meet a condition Teacher" << endl;
+				for (int i = 0; i < 100; i++)
+				{
+					if (tea[i].t_name == unknow_information)
+						cout << "Name:" << tea[i].t_name << " ID:" << tea[i].t_ID << " College:" << tea[i].t_college << endl;
+					else if (tea[i].t_ID == unknow_information)
+						cout << "Name:" << tea[i].t_name << " ID:" << tea[i].t_ID << " College:" << tea[i].t_college << endl;
+					else if (tea[i].t_college == unknow_information)
+						cout << "Name:" << tea[i].t_name << " ID:" << tea[i].t_ID << " College:" << tea[i].t_college << endl;
+				}
+				cout << "Meet a condition Student" << endl;
+				for (int i = 0; i < 100; i++)
+				{
+					if (stu[i].s_name == unknow_information)
+						cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+					else if (stu[i].s_ID == unknow_information)
+						cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+					else if (stu[i].s_college == unknow_information)
+						cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+				}
+				cout << "Input 1 to back main menu:";
+				int key_3;
+				cin >> key_3;
+				if (key_3 == 1)
+					UI_Stepone();
+			}
+		}
+		else
+			UI_Stepone();
+	}
+	UI_Stepthree();
+}//第二用户界面
+
+void UI_Stepthree() {
+	if (UI_Steptwo_one == 1 && onenumber == 1)//教师登录
+	{
+		string temporary_name;
+		string temporary_password;
+		string temporary_ID;
+		int time;
+		for (int i = 0; i < 100; i++)
+		{
+		T_Name_input:cout << "T_Name:"; cin >> temporary_name; cout << endl;
+			if (temporary_name == tea[i].t_name)
+			{
+				check_lock(i);
+			T_ID_input:cout << "ID:"; cin >> temporary_ID; cout << endl;
+				if (temporary_ID == tea[i].t_ID)
+				{
+					cout << "Password:"; cin >> temporary_password; cout << endl;
+					if (temporary_password == tea[i].t_password)
+					{
+						UI_Stepfour(i);
+					}
+					else
+					{
+						int flag;
+						for (time = 5, flag = 1; time > 0, flag != 0; time--)
+						{
+							user_lock(time, i);
+							cout << "Password:"; cin >> temporary_password;
+							if (temporary_password == tea[i].t_password)
+							{
+								UI_Stepfour(i);
+								flag = 0;
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					cout << "ID wrong,input again";
+					goto T_ID_input;
+				}
+			}
+			else
+			{
+				cout << "Teacher  can't found,cheak your input or connect administrator" << endl;
+			T_Celect:cout << "Input 1 contine login input 0 to end"; int t_tem_num_two; cin >> t_tem_num_two;
+				if (t_tem_num_two == 1)
+					goto T_Name_input;
+				else if (t_tem_num_two == 0)
+					break;
+				else
+					goto T_Celect;
+			}
+		}
+
+	}
+	else if (UI_Steptwo_one == 0 && onenumber == 1)//教师注册
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			if (tea[i].t_ID == "x")
+			{
+				ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
+				string tea_tem_name;
+				string tea_tem_id;
+				string tea_tem_password;
+				string tea_tem_college;
+				int tea_tem_class;
+				//输入
+				cout << "Name:"; cin >> tea_tem_name;
+				cout << "ID:"; cin >> tea_tem_id;
+				cout << "Password:"; cin >> tea_tem_password;
+				cout << "College:"; cin >> tea_tem_college;
+				cout << "Class:"; cin >> tea_tem_class;
+				//写入
+				f1 << "  " << tea_tem_name;
+				f1 << "    " << tea_tem_id;
+				f1 << "    " << tea_tem_password;
+				f1 << "    " << tea_tem_college;
+				f1 << "    " << tea_tem_class;
+				f1 << "    " << i << endl;
+				f1.close();
+				cout << "Dear IMU teacher,your information has been written ,wainting administer check and give you pass authority" << endl;
+				UI_Stepone();
+			}
+		}
+
+	}
+	else if (UI_Steptwo_two == 1 && onenumber == 2)//学生登陆
+	{
+		string temporary_name;
+		string temporary_password;
+		string temporary_ID;
+		int time;
+		for (int i = 0; i < 100; i++)
+		{
+		S_Name_input:cout << "Name:"; cin >> temporary_name; cout << endl;
+			if (temporary_name == stu[i].s_name)
+			{
+				check_lock(i);
+			S_ID_input:cout << "ID:"; cin >> temporary_ID; cout << endl;
+				if (temporary_ID == stu[i].s_ID)
+				{
+					cout << "Password:"; cin >> temporary_password; cout << endl;
+					if (temporary_password == stu[i].s_password)
+					{
+						UI_Stepfour(i);
+						break;
+					}
+					else
+					{
+						int flag;
+						for (time = 5, flag = 1; time > 0, flag != 0; time--)
+						{
+							user_lock(time, i);
+							cout << "Password:"; cin >> temporary_password;
+							if (temporary_password == stu[i].s_password)
+							{
+								UI_Stepfour(i);
+								flag = 0;
+							}
+						}
+					}
+				}
+				else
+				{
+					cout << "ID wrong,input again";
+					goto S_ID_input;
+				}
+			}
+			else
+			{
+				cout << "Student  can't found,cheak your input or connect administrator" << endl;
+			S_Celect:cout << "Input 1 contine login input 0 to end";
+				int s_tem_num_two;
+				cin >> s_tem_num_two;
+				if (s_tem_num_two == 1)
+					goto S_Name_input;
+				else if (s_tem_num_two == 0)
+					break;
+				else
+					goto S_Celect;
+			}
+		}
+	}
+	else if (UI_Steptwo_two == 0 && onenumber == 2)//学生注册
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			if (stu[i].s_ID == "x")
+			{
+				string temporary_name;
+				string temporary_ID;
+				string temporary_password;
+				string temporary_college;
+				int temporary_class;
+				cout << "Sz_Name:"; cin >> temporary_name;  stu[i].s_name = temporary_name;
+				cout << "ID:"; cin >> temporary_ID;  stu[i].s_ID = temporary_ID;
+				cout << "Password:"; cin >> temporary_password;  stu[i].s_password = temporary_password;
+				cout << "College:"; cin >> temporary_college;  stu[i].s_college = temporary_college;
+				cout << "Class:"; cin >> temporary_class; stu[i].s_class = temporary_class; cout << endl;
+				//显示
+				cout << "Logon successed,this is your information" << endl;
+				cout << "Name:" << stu[i].s_name << endl;
+				cout << "ID:" << stu[i].s_ID << endl;
+				cout << "Password:" << stu[i].s_password << endl;
+				cout << "College:" << stu[i].s_college << endl;
+				cout << "Class:" << stu[i].s_class << endl;
+			Check_Back:cout << "Information has been writen,check it,if something wrong input 0 to revise or input 1 to login:";
+				int tem_num;
+				cin >> tem_num;
+				if (tem_num == 0)
+				{
+					stu[i].s_ID = "x";
+					UI_Stepthree();
+				}
+				else if (tem_num == 1)
+				{
+					UI_Stepone();
+				}
+				else
+				{
+					cout << "Invalid input,Check your input to continue";
+					goto Check_Back;
+				}
+			}
+		}
+	}
+
+}
+
+void user_lock(int time, int i)//密码输错锁定
+{
+	if (time != 0)
+	{
+		time--;
+		cout << "Password wrong,check your input,you have only " << time;
+		if (time == 1)
+			cout << "change" << endl << endl;
+		else
+			cout << "changes" << endl << endl;
+	}
+	else
+	{
+		cout << "Password input wronged many times,user has been locked";
+		if (onenumber == 1)
+		{
+			tea[i].t_lock = 1;
+			ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\tea_lock.txt");
+			f1 << i;
+			f1 << "  " << tea[i].t_name;
+			f1 << "  " << tea[i].t_ID;
+			f1 << "  " << tea[i].t_password;
+			f1 << "  " << tea[i].t_college;
+			f1 << "  " << tea[i].t_class << endl << endl << endl;
+			f1.close();
+		}
+		else if (onenumber == 2)
+		{
+			stu[i].s_lock = 1;
+			ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Lock\\stu_lock.txt");
+			f1 << i;
+			f1 << "  " << stu[i].s_name;
+			f1 << "  " << stu[i].s_ID;
+			f1 << "  " << stu[i].s_password;
+			f1 << "  " << stu[i].s_college;
+			f1 << "  " << stu[i].s_class << endl << endl << endl;
+			f1.close();
+		}
+	}
+}
+
+void check_lock(int i) {
+	if (tea[i].t_lock == 1 && onenumber == 1)
+		cout << "User locked" << endl;
+	else if (onenumber == 2 && stu[i].s_lock == 1)
+		cout << "User locked" << endl;
+}//检查用户状态
+
+void UI_Stepfour(int i) {
+	if (UI_Steptwo_one == 1 && onenumber == 1)//教师管理
+	{
+		cout << "======Please input number in the list to select status=====" << endl;
+		cout << "===1.Inquiry all students in class,input class number:=====" << endl;
+		cout << "====2.Inquiry all students in one course,input course======" << endl;
+		int tem_four_num;
+		cin >> tem_four_num;
+		if (tem_four_num == 1)
+		{
+			int x_class;
+			cin >> x_class;
+			cout << "Class:" << x_class << "course situation";
+			for (int i = 0; i < 100; i++)
+			{
+				if (stu[i].s_class == x_class)
+				{
+					cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << " Math:" << stu[i].math << " Chinese:" << stu[i].chinese << " English:" << stu[i].english << endl;
+				}
+			}
+		}
+		else if (tem_four_num == 2)
+		{
+			string x_course;
+			cin >> x_course;
+			cout << "This is" << x_course << "student course situation";
+			for (int i = 0; i < 100; i++)
+			{
+				if (x_course == "Math")
+				{
+					for (int i = 0; i < 100; i++)
+					{
+						if (stu[i].math == 1)
+							cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+					}
+				}
+				else if (x_course == "Chinese")
+				{
+					for (int i = 0; i < 100; i++)
+					{
+						if (stu[i].chinese == 1)
+							cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+					}
+				}
+				else if (x_course == "Eglish")
+				{
+					for (int i = 0; i < 100; i++)
+					{
+						if (stu[i].english == 1)
+							cout << "Name:" << stu[i].s_name << " ID:" << stu[i].s_ID << " College:" << stu[i].s_college << endl;
+					}
+				}
+			}
+
+		}
+
+	}
+	else if (UI_Steptwo_two == 1 && onenumber == 2)//学生选课
+	{
+		cout << "===============This is your course situation===============" << endl;
+		cout << "==========Math==========Chinese===========English==========" << endl;
+		cout << "============" << stu[i].math << "==============" << stu[i].chinese << "================" << stu[i].english << "==============" << endl;
+		cout << "==Input 1 to change course situation and input 0 to close==" << endl;
+		cout << "=================Input 7 to change password================" << endl;
+		int UI_Stepfour_S_num;
+		cin >> UI_Stepfour_S_num;
+		if (UI_Stepfour_S_num == 1)
+		{
+			cout << "======Input math 1 to change or input math 0 to cancle========" << endl;
+			string tem_course;
+			int tem_change;
+			cin >> tem_course >> tem_change;
+			if (tem_course == "math")
+				stu[i].math = tem_change;
+			else if (tem_course == "chinese")
+				stu[i].chinese = tem_change;
+			else if (tem_course == "english")
+				stu[i].english = tem_change;
+			cout << endl;
+			cout << "===============This is your course situation===============" << endl;
+			cout << "==========Math==========Chinese===========English==========" << endl;
+			cout << "==========" << stu[i].math << "============" << stu[i].chinese << "==============" << stu[i].english << "============" << endl;
+			cout << endl;
+			cout << "============Change course situation successed==============" << endl;
+			return;
+
+		}
+		else if (UI_Stepfour_S_num == 0)
+			return;
+		else if (UI_Stepfour_S_num == 7)
+			Change_password(i);
+	}
+}//第四用户界面
+
+void Change_password(int i) {
+	cout << "Please input your old password:";
+	string tem_cha_p;
+	cin >> tem_cha_p;
+	if (stu[i].s_password == tem_cha_p)
+	{
+	INPUT:cout << "Input your new password now:";
+		string new_pass1, new_pass2;
+		cin >> new_pass1;
+		cout << "Input again:";
+		cin >> new_pass2;
+		if (new_pass1 == new_pass2)
+		{
+			stu[i].s_password = new_pass1;
+			UI_Stepone();
+		}
+		else
+		{
+			cout << "Twices input different,please input again";
+			goto INPUT;
+		}
+	}
+}
+
+int main()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		stu[i].s_ID = tea[i].t_ID = "x";
+
+	}
+	Read_Date();
+	Read_Lock();
+	UI_Stepone();
+	return 0;
+}
