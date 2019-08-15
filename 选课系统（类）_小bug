@@ -152,7 +152,7 @@ void Read_Lock() {
 	tea[b[0]].set_t_lock(true);
 	in.close();
 
-}//系统读取被锁用户
+}//系统读取被锁用户，必须确定stu_lock.txt与tea_lock.txt中有数据，否则会报错
 
 void Read_See_Logon() {
 	ifstream in;
