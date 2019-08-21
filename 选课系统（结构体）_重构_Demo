@@ -1,0 +1,585 @@
+#include<iostream>
+#include<fstream>
+#include<istream>
+#include<string>
+#include<conio.h>
+#include<iomanip>
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+
+using namespace std;
+
+string ID_number;
+
+struct student
+{
+	string name;
+	string ID;
+	string password;
+	bool lock;
+	bool math, cpp, english;
+	student() 
+	{
+		name = "x";
+		ID = "x";
+		password = "x";
+		lock = false;
+		math = cpp = english = false;
+	};
+	~student() {};
+}; student stu[100];
+
+struct teacher
+{
+	string name;
+	string ID;
+	string password;
+	bool lock ;
+	teacher() 
+	{
+		name = "x";
+		ID = "x";
+		password = "x";
+		lock = false;
+	};
+	~teacher() {};
+}; teacher tea[50];
+
+struct administrator
+{
+	string Password;
+	bool lock;
+	administrator()
+	{
+		lock = false;
+	};
+	~administrator() {};
+};administrator adm;
+
+void WriteFiles_stu(int j)//写入新注册学生信息
+{
+	ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt",ios::app);
+	f1 << "  " << j;
+	f1 << "   " << stu[j].name;
+	f1 << "   " << stu[j].ID;
+	f1 << "   " << stu[j].password;
+	f1 << "   " << stu[j].lock;
+	f1 << "   " << stu[j].math;
+	f1 << "   " << stu[j].cpp;
+	f1 << "   " << stu[j].english << endl;
+	f1.close();
+	cout << "                                                  注册信息已写入";
+	Sleep(500);
+}
+
+void ReadFiles_stu()//读学生信息
+{
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt");
+	for (int i = 0; i < 100; i++)
+	{
+		int j; in >> j;
+		in >> stu[j].name >> stu[j].ID >> stu[j].password >> stu[j].lock >> stu[j].math >> stu[j].cpp >> stu[j].english;
+	}
+	in.close();
+}
+
+void WriteFiles_new(int j)//写入新注册教师信息
+{
+	ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\logon.txt", ios::app);
+	f1 << "  " << j;
+	f1 << "   " << stu[j].name;
+	f1 << "   " << stu[j].ID;
+	f1 << "   " << stu[j].password;
+	f1 << "   " << stu[j].lock << endl;
+	stu[j].name = "y";
+	f1.close();
+	cout << "                                                   注册信息已写入,等待管理员审核";
+	Sleep(1000);
+}
+
+void ReadFiles_tea()//读教师
+{
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_tea.txt");
+	for (int i = 0; i < 100; i++)
+	{
+		int j; in >> j;
+		in >> tea[j].name >> tea[j].ID >> tea[j].password >> tea[j].lock;
+	}
+	in.close();
+}
+
+void WriteFlie_logon_tea()//将注册教师信息写入文件
+{
+	ifstream in;
+	system("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
+	cout << "                                                 输入1将信息写入教师端，输入0返回：";
+	int mm;
+	cin >> mm;
+	if (mm == 1)
+	{
+		ifstream in;
+		in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
+		int j;
+		in >> j;
+		in >> tea[j].name >> tea[j].ID >> tea[j].password >> tea[j].lock;
+		in.close();
+		ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_tea.txt", ios::app);
+		f1 << "  " << j;
+		f1 << "   " << stu[j].name;
+		f1 << "   " << stu[j].ID;
+		f1 << "   " << stu[j].password;
+		f1 << "   " << stu[j].lock << endl;
+		f1.close();
+		cout << "                                                      注册信息已写入";
+		Sleep(500);
+	}
+	else if (mm == 0)
+		return;
+}
+
+void ReadFiles_adm()//读管理员密码
+{
+	ifstream in;
+	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_Adm.txt");
+	in >> adm.Password >> adm.lock;
+	in.close();
+}
+
+void UI_Stepone()
+{
+	ReadFiles_stu();
+	ReadFiles_tea();
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                内蒙古大学选课系统                                  |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  1.学生访问                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  2.教师访问                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  3.管理员登陆                                      |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+}
+
+void UI_Steptwo_student()
+{
+	ReadFiles_stu();
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                内蒙古大学选课系统                                  |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  1.学生登陆                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  2.学生注册                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  0.返回上一级                                      |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+}
+
+void UI_Steptwo_teacher()
+{
+	ReadFiles_tea();
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                内蒙古大学选课系统                                  |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  1.教师登陆                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  2.教师注册                                        |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  0.返回上一级                                      |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+
+}
+
+void UI_Steptwo_administrator()
+{
+	ReadFiles_adm();
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                内蒙古大学选课系统                                  |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                               输入管理员密码 :(0返回上一级)";
+
+}
+
+string login_s_name, login_s_ID;
+
+string UI_Stepthree_stu_login()
+{
+	string login_s_password;
+	ReadFiles_stu();
+	char ch;
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                内蒙古大学选课系统:学生登陆                         |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                       学生姓名:"; cin >> login_s_name;
+	if (login_s_name == "0")
+		return " ";
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                        学生ID:"; cin >> login_s_ID;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                    登陆密码:"; 
+	while ((ch = _getch())!=13)
+	{
+		login_s_password += ch;
+		cout << "*";
+	};
+	cout << endl;
+	cout << "                  |====================================================================================|" << endl;
+	return login_s_password;
+}
+
+void UI_Stepthree_stu_logon()
+{
+	string logon_s_name, logon_s_ID, logon_s_password;
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                             内蒙古大学选课系统:学生注册                            |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                       注册姓名:"; cin >> logon_s_name;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                        学生ID:"; cin >> logon_s_ID;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                    登陆密码:"; cin >> logon_s_password;
+	cout << "                  |====================================================================================|" << endl;
+	for (int i = 0; i < 100; i++)
+	{
+		int j;
+		if (stu[i].name == "x")
+		{
+			stu[i].name = logon_s_name;
+			stu[i].ID = logon_s_ID;
+			stu[i].password = logon_s_password;
+			j = i;
+			WriteFiles_stu(j);
+			ReadFiles_stu();
+			i = 100;
+		}
+	}
+	
+}
+
+string login_t_name, login_t_ID;
+
+string UI_Stepthree_tea_login()
+{
+	string  login_t_password;
+	ReadFiles_tea();
+	char ch;
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                              内蒙古大学选课系统：教师登录                          |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                       教师姓名:"; cin >> login_t_name;
+	if (login_t_name == "0")
+		return " ";
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                        教师ID:"; cin >> login_t_ID;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                    登陆密码:"; 
+	while ((ch = _getch()) != 13)
+	{
+		login_t_password += ch;
+		cout << "*";
+	};
+	cout << endl;
+	cout << "                  |====================================================================================|" << endl;
+	return login_t_password;
+}
+
+void UI_Stepthree_tea_logon()
+{
+	string logon_s_name, logon_s_ID, logon_s_password;
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                             内蒙古大学选课系统:教师注册                            |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                       注册姓名:"; cin >> logon_s_name;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                        教师ID:"; cin >> logon_s_ID;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                    登陆密码:"; cin >> logon_s_password;
+	cout << "                  |====================================================================================|" << endl;
+	for (int i = 0; i < 100; i++)
+	{
+		int j;
+		if (tea[i].name == "x")
+		{
+			tea[i].name = logon_s_name;
+			tea[i].ID = logon_s_ID;
+			tea[i].password = logon_s_password;
+			j = i;
+			WriteFiles_new(j);
+			i = 100;
+		}
+	}
+}
+
+void UI_Stepfour_adm()
+{
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                           内蒙古大学选课系统:管理员登入                            |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  1.审查新注册教师                                  |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  2.学生选课情况查询                                |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  3.系统用户查找                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  0.返回上一级                                      |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+}
+
+int main()
+{
+	int s_times = 5;
+	int t_times = 5;
+	int adm_times = 3;
+	int s_flag =1, t_flag= 1;
+	int na;
+	string bug1,bug2;
+
+	ReadFiles_stu();
+
+	while (1)
+	{
+		UI_Stepone();
+		cin >> ID_number;
+
+		while (1)
+		{
+
+			if (ID_number == "1")//学生
+			{
+				string two_stu;
+				UI_Steptwo_student();
+				cin >> two_stu;
+					if (two_stu == "1")
+					{
+						bug1=UI_Stepthree_stu_login();
+						for (int i = 0; i < 100; i++)
+						{
+				
+							if (stu[i].name == login_s_name)
+							{
+								na = 1;
+								if (stu[i].ID == login_s_ID)
+								{
+									if (stu[i].password == bug1)
+									{
+										s_times = 5;
+										cout << "hh"; Sleep(1000);
+										//进入学生选课函数
+									}
+									else
+									{
+										s_times--;
+										cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
+										cout << "                                                        将自动返回上级菜单";
+										Sleep(1000);
+										if (s_times == 0)
+											stu[i].lock = true;//账户锁定
+										break;
+									}
+								}
+								else
+								{
+									cout << "                                              ID输入错误，请核实信息后输入";
+									Sleep(1000);
+									break;
+								}
+							}
+							else if (login_s_name == "0")
+							{
+								s_flag = 0;
+								break;
+							}
+							else
+								na = 0;
+							if(i == 100&&na == 0)
+							{
+								cout << "                                             姓名输入错误，请核实信息后输入";
+								Sleep(1000);
+								break;
+							}
+						}
+					}
+					else if (two_stu == "2")
+					{
+						UI_Stepthree_stu_logon();
+					}
+					else if(two_stu == "0")
+					{
+						s_flag = false;
+						s_times = 5;
+						break;
+					}
+					else
+					{
+						cout << "无效输入，请重新输入";
+						Sleep(500);
+					}
+			}
+			
+
+			else if (ID_number == "2")//教师
+			{
+				string two_tea;
+				UI_Steptwo_teacher();
+				cin >> two_tea;
+					if (two_tea == "1")
+					{
+						bug2=UI_Stepthree_tea_login();
+						for (int i = 0; i < 100; i++)
+						{
+							if (tea[i].name == login_t_name)
+							{
+								if (tea[i].ID == login_t_ID)
+								{
+									if (tea[i].password == bug2)
+									{
+										t_times = 5;
+										//进入教师管理函数
+									}
+									else
+									{
+										t_times--;
+										cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
+										cout << "                                                     将自动返回上级菜单";
+										Sleep(1000);
+										if (t_times == 0)
+											tea[i].lock = true;//账户锁定
+										break;
+									}
+								}
+								else if (login_t_name == "0")
+								{
+									t_flag = 0;
+									break;
+								}
+								else
+								{
+									cout << "                                             ID输入错误，请核实信息后输入";
+									Sleep(1000);
+									break;
+								}
+							}
+
+							else
+							{
+								cout << "                                             姓名输入错误，请核实信息后输入";
+								Sleep(1000);
+								break;
+							}
+						}
+					}
+					else if (two_tea == "2")
+					{
+						UI_Stepthree_tea_logon();
+					}
+					else if (two_tea == "0")
+					{
+						t_times = 5;
+						break;
+					}
+					else
+					{
+						cout << "无效输入，请重新输入";
+						Sleep(500);
+					}
+				
+			}
+
+			else if (ID_number == "3")
+			{
+
+				string adm_password;
+				UI_Steptwo_administrator();
+				char adm_ch;
+				while ((adm_ch = _getch()) != 13)
+				{
+					adm_password += adm_ch;
+					cout << "*";
+				};
+				cout << endl;
+				if (adm_password == adm.Password)
+				{
+					adm_times = 3;
+					UI_Stepfour_adm();
+					string UI_Four_Num;
+					cin >> UI_Four_Num;
+					if (UI_Four_Num == "1")
+					{
+
+					}
+					else if (UI_Four_Num == "2")
+					{
+
+					}
+					else if (UI_Four_Num == "3")
+					{
+
+					}
+					else if (UI_Four_Num == "0")
+					{
+						break;
+					}
+					// 管理员函数
+
+				}
+				else if (adm_password == "0")
+				{
+					adm_times = 3;
+					break;
+				}
+				else
+				{
+					adm_times--;
+					cout << "                                                  密码输入错误 ，还有"<<adm_times<< "次机会";
+					Sleep(1000);
+				}
+			}
+
+			else
+			{
+				cout << "无效输入，请重新输入";
+				Sleep(500);
+				break;
+			}
+
+		}
+	}
+}
