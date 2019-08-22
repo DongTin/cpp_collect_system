@@ -19,7 +19,7 @@ struct student
 	string password;
 	bool lock;
 	bool math, cpp, english;
-	student() 
+	student()
 	{
 		name = "x";
 		ID = "x";
@@ -35,8 +35,8 @@ struct teacher
 	string name;
 	string ID;
 	string password;
-	bool lock ;
-	teacher() 
+	bool lock;
+	teacher()
 	{
 		name = "x";
 		ID = "x";
@@ -55,11 +55,11 @@ struct administrator
 		lock = false;
 	};
 	~administrator() {};
-};administrator adm;
+}; administrator adm;
 
 void WriteFiles_stu(int j)//写入新注册学生信息
 {
-	ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt",ios::app);
+	ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt", ios::app);
 	f1 << "  " << j;
 	f1 << "   " << stu[j].name;
 	f1 << "   " << stu[j].ID;
@@ -71,6 +71,23 @@ void WriteFiles_stu(int j)//写入新注册学生信息
 	f1.close();
 	cout << "                                                       注册信息已写入";
 	Sleep(500);
+}
+
+void WriteFiles_stu_()//写学生信息
+{
+	for (int j = 0; j < 100; j++)
+	{
+		ofstream f1("C:\\Users\\DongTin\\Desktop\\Administrator\\Date\\Date_stu.txt", ios::app);
+		f1 << "  " << j;
+		f1 << "   " << stu[j].name;
+		f1 << "   " << stu[j].ID;
+		f1 << "   " << stu[j].password;
+		f1 << "   " << stu[j].lock;
+		f1 << "   " << stu[j].math;
+		f1 << "   " << stu[j].cpp;
+		f1 << "   " << stu[j].english << endl;
+		f1.close();
+	}
 }
 
 void ReadFiles_stu()//读学生信息
@@ -112,7 +129,7 @@ void ReadFiles_tea()//读教师
 	in.close();
 }
 
-void UI_Stepfour_adm_1(int,string,string);
+void UI_Stepfour_adm_1(int, string, string);
 
 void WriteFlie_logon_tea()//将注册教师信息写入文件
 {
@@ -123,7 +140,7 @@ void WriteFlie_logon_tea()//将注册教师信息写入文件
 	in.open("C:\\Users\\DongTin\\Desktop\\Administrator\\logon.txt");
 	in >> f >> W_name >> W_ID;
 	in.close();
-	UI_Stepfour_adm_1(f,W_name,W_ID);
+	UI_Stepfour_adm_1(f, W_name, W_ID);
 	cout << "                                                 输入1将信息写入教师端，输入0返回：";
 	string mm;
 	cin >> mm;
@@ -247,8 +264,8 @@ string UI_Stepthree_stu_login()
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                                                        学生ID:"; cin >> login_s_ID;
 	cout << "                  |====================================================================================|" << endl;
-	cout << "                  |                                    登陆密码:"; 
-	while ((ch = _getch())!=13)
+	cout << "                  |                                    登陆密码:";
+	while ((ch = _getch()) != 13)
 	{
 		login_s_password += ch;
 		cout << "*";
@@ -288,7 +305,7 @@ void UI_Stepthree_stu_logon()
 			i = 100;
 		}
 	}
-	
+
 }
 
 string login_t_name, login_t_ID;
@@ -311,7 +328,7 @@ string UI_Stepthree_tea_login()
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                                                        教师ID:"; cin >> login_t_ID;
 	cout << "                  |====================================================================================|" << endl;
-	cout << "                  |                                    登陆密码:"; 
+	cout << "                  |                                    登陆密码:";
 	while ((ch = _getch()) != 13)
 	{
 		login_t_password += ch;
@@ -372,7 +389,7 @@ void UI_Stepfour_adm()
 	cout << "                  |====================================================================================|" << endl;
 }
 
-void UI_Stepfour_adm_1(int j,string W_name,string W_ID)
+void UI_Stepfour_adm_1(int j, string W_name, string W_ID)
 {
 	system("cls");
 	cout << "                  |====================================================================================|" << endl;
@@ -413,21 +430,21 @@ void UI_Stepfour_adm_3()
 
 void UI_Stepfour_stu()
 {
-		system("cls");
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                  |                                                                                    |" << endl;
-		cout << "                  |                                                                                    |" << endl;
-		cout << "                  |                            内蒙古大学选课系统:学生登入                             |" << endl;
-		cout << "                  |                                                                                    |" << endl;
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                  |                                  1.当前选课情况查询                                |" << endl;
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                  |                                  2.课程修读与退选                                  |" << endl;
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                  |                                  3.修改个人密码                                    |" << endl;
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                  |                                  0.返回上一级                                      |" << endl;
-		cout << "                  |====================================================================================|" << endl;
+	system("cls");
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |                            内蒙古大学选课系统:学生登入                             |" << endl;
+	cout << "                  |                                                                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  1.当前选课情况查询                                |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  2.课程修读与退选                                  |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  3.修改个人密码                                    |" << endl;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                  |                                  0.返回上一级                                      |" << endl;
+	cout << "                  |====================================================================================|" << endl;
 }
 
 void UI_Stepfour_stu_1(int x)
@@ -446,14 +463,14 @@ void UI_Stepfour_stu_1(int x)
 		cout << "未选";
 	else
 		cout << "已选";
-	cout<<"                    |" << endl;
+	cout << "                    |" << endl;
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                  |                    英语                                    ";
 	if (stu[x].english == false)
 		cout << "未选";
 	else
 		cout << "已选";
-	cout<< "                    |" << endl;
+	cout << "                    |" << endl;
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                  |                    C++程序设计基础                         ";
 	if (stu[x].cpp == false)
@@ -480,18 +497,21 @@ void UI_Stepfour_stu_2(int x)
 	if (tem_class == "C++程序设计基础")
 	{
 		stu[x].cpp = (!stu[x].cpp);
+		WriteFiles_stu_();
 		cout << "                  |====================================================================================|" << endl;
 		cout << "                  |                                修改课程状态成功                                    |" << endl;
 	}
 	else if (tem_class == "英语")
 	{
 		stu[x].english = (!stu[x].english);
+		WriteFiles_stu_();
 		cout << "                  |====================================================================================|" << endl;
 		cout << "                  |                                修改课程状态成功                                    |" << endl;
 	}
 	else if (tem_class == "数学")
 	{
 		stu[x].math = (!stu[x].math);
+		WriteFiles_stu_();
 		cout << "                  |====================================================================================|" << endl;
 		cout << "                  |                                修改课程状态成功                                    |" << endl;
 	}
@@ -504,7 +524,7 @@ void UI_Stepfour_stu_2(int x)
 int UI_Stepfour_stu_3(int x)
 {
 	string tem_password;
-	string  ls1,ls2;
+	string  ls1, ls2;
 	system("cls");
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                  |                                                                                    |" << endl;
@@ -513,31 +533,31 @@ int UI_Stepfour_stu_3(int x)
 	cout << "                  |                                                                                    |" << endl;
 	cout << "                  |====================================================================================|" << endl;
 	cout << "                                                      请输入旧密码："; cin >> tem_password;
-	Change_Pass:if (tem_password == stu[x].password)
+Change_Pass:if (tem_password == stu[x].password)
+{
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                      请输入新密码："; cin >> ls1;
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                      再次确定密码："; cin >> ls2;
+	if (ls1 == ls2)
 	{
+		stu[x].password = ls1;
+		ReadFiles_stu();
 		cout << "                  |====================================================================================|" << endl;
-		cout << "                                                      请输入新密码："; cin >> ls1;
+		cout << "                  |                                   修改密码成功                                     |" << endl;
 		cout << "                  |====================================================================================|" << endl;
-		cout << "                                                      再次确定密码："; cin >> ls2;
-		if (ls1 == ls2)
-		{
-			stu[x].password = ls1;
-			ReadFiles_stu();
-			cout << "                  |====================================================================================|" << endl;
-			cout << "                  |                                   修改密码成功                                     |" << endl;
-			cout << "                  |====================================================================================|" << endl;
-			cout << "                                                      键入0返回上一级";
-			return 1;
-		}
-		else
-			goto Change_Pass;
+		cout << "                                                      键入0返回上一级";
+		return 1;
 	}
-				else
-	{
-		cout << "                  |====================================================================================|" << endl;
-		cout << "                                                  密码错误，将自动返回上级菜单";
-		return 0;
-	}
+	else
+		goto Change_Pass;
+}
+			else
+{
+	cout << "                  |====================================================================================|" << endl;
+	cout << "                                                  密码错误，将自动返回上级菜单";
+	return 0;
+}
 }
 
 void UI_Stepfour_tea()
@@ -628,7 +648,7 @@ int main()
 	int t_times = 5;
 	int adm_times = 3;
 	int na, nb;
-	string bug1,bug2;
+	string bug1, bug2;
 
 	ReadFiles_stu();
 
@@ -645,274 +665,286 @@ int main()
 				string two_stu;
 				UI_Steptwo_student();
 				cin >> two_stu;
-					if (two_stu == "1")
+				if (two_stu == "1")
+				{
+					bug1 = UI_Stepthree_stu_login();
+					for (int i = 0; i < 100; i++)
 					{
-						bug1=UI_Stepthree_stu_login();
-						for (int i = 0; i < 100; i++)
+
+						if (stu[i].name == login_s_name)
 						{
-				
-							if (stu[i].name == login_s_name)
+							na = 1;
+							if (stu[i].ID == login_s_ID)
 							{
-								na = 1;
-								if (stu[i].ID == login_s_ID)
+								if (stu[i].password == bug1)
 								{
-									if (stu[i].password == bug1)
+									s_times = 5;
+
+								F_stu:UI_Stepfour_stu();
+									string UI_f_stu;
+									cin >> UI_f_stu;
+									if (UI_f_stu == "1")
 									{
-										s_times = 5;
-										
-											F_stu:UI_Stepfour_stu();
-											string UI_f_stu;
-											cin >> UI_f_stu;
-											if (UI_f_stu == "1")
-											{
-												UI_Stepfour_stu_1(i);
-												string Back_num;
-												cin >> Back_num;
-												if (Back_num == "0")
-													goto F_stu;
-												else
-												{
-													cout << "                                                        无效输入";
-												}
-											}
-											else if (UI_f_stu == "2")
-											{
-												UI_Stepfour_stu_2(i);
-												string Back_num;
-												cin >> Back_num;
-												if (Back_num == "0")
-													goto F_stu;
-												else
-												{
-													cout << "                                                        无效输入";
-												}
-											}
-											else if (UI_f_stu == "3")
-											{
-												int f=UI_Stepfour_stu_3(i);
-												if (f == 0)
-												{
-													Sleep(1500);
-													goto F_stu;
-												}
-												else if (f == 1)
-												{
-													string Back_num;
-													cin >> Back_num;
-													if (Back_num == "0")
-														goto F_stu;
-													else
-													{
-														cout << "                                                        无效输入";
-													}
-												}
-											}
-											else if (UI_f_stu == "0")
-											{
-												break;
-											}
-											//进入学生选课函数
-										
+										UI_Stepfour_stu_1(i);
+										string Back_num;
+										cin >> Back_num;
+										if (Back_num == "0")
+											goto F_stu;
+										else
+										{
+											cout << "                                                        无效输入";
+										}
 									}
-									else
+									else if (UI_f_stu == "2")
 									{
-										s_times--;
-										cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
-										cout << "                                                        将自动返回上级菜单";
-										Sleep(1000);
-										if (s_times == 0)
-											stu[i].lock = true;//账户锁定
+										UI_Stepfour_stu_2(i);
+										string Back_num;
+										cin >> Back_num;
+										if (Back_num == "0")
+											goto F_stu;
+										else
+										{
+											cout << "                                                        无效输入";
+										}
+									}
+									else if (UI_f_stu == "3")
+									{
+										int f = UI_Stepfour_stu_3(i);
+										if (f == 0)
+										{
+											Sleep(1500);
+											goto F_stu;
+										}
+										else if (f == 1)
+										{
+											string Back_num;
+											cin >> Back_num;
+											if (Back_num == "0")
+												goto F_stu;
+											else
+											{
+												cout << "                                                        无效输入";
+											}
+										}
+									}
+									else if (UI_f_stu == "0")
+									{
 										break;
 									}
+									//进入学生选课函数
+
 								}
 								else
 								{
-									cout << "                                              ID输入错误，请核实信息后输入";
+									s_times--;
+									cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
+									cout << "                                                        将自动返回上级菜单";
 									Sleep(1000);
+									if (s_times == 0)
+										stu[i].lock = true;//账户锁定
 									break;
 								}
 							}
-							else if (login_s_name == "0")
-							{
-								break;
-							}
 							else
-								na = 0;
-							if(i == 100&&na == 0)
 							{
-								cout << "                                             姓名输入错误，请核实信息后输入";
+								cout << "                                              ID输入错误，请核实信息后输入";
 								Sleep(1000);
 								break;
 							}
 						}
+						else if (login_s_name == "0")
+						{
+							break;
+						}
+						else
+							na = 0;
+						if (i == 99 && na == 0)
+						{
+							cout << "                                             姓名输入错误，请核实信息后输入";
+							Sleep(1000);
+							break;
+						}
 					}
-					else if (two_stu == "2")
-					{
-						UI_Stepthree_stu_logon();
-					}
-					else if(two_stu == "0")
-					{
-						s_times = 5;
-						break;
-					}
-					else
-					{
-						cout << "无效输入，请重新输入";
-						Sleep(500);
-					}
+				}
+				else if (two_stu == "2")
+				{
+					UI_Stepthree_stu_logon();
+				}
+				else if (two_stu == "0")
+				{
+					s_times = 5;
+					break;
+				}
+				else
+				{
+					cout << "无效输入，请重新输入";
+					Sleep(500);
+				}
 			}
-			
+
 
 			else if (ID_number == "2")//教师
 			{
 				string two_tea;
 				UI_Steptwo_teacher();
 				cin >> two_tea;
-					if (two_tea == "1")
+				if (two_tea == "1")
+				{
+					bug2 = UI_Stepthree_tea_login();
+					for (int i = 0; i < 100; i++)
 					{
-						bug2=UI_Stepthree_tea_login();
-						for (int i = 0; i < 100; i++)
+						if (tea[i].name == login_t_name)
 						{
-							if (tea[i].name == login_t_name)
+							nb = 1;
+							if (tea[i].ID == login_t_ID)
 							{
-								nb = 1;
-								if (tea[i].ID == login_t_ID)
+								if (tea[i].password == bug2)
 								{
-									if (tea[i].password == bug2)
+									t_times = 5;
+								F_tea2:UI_Stepfour_tea();
+									string UI_f_tea;
+									cin >> UI_f_tea;
+									if (UI_f_tea == "1")
 									{
-										t_times = 5;
-										UI_Stepfour_tea();
-										string UI_f_tea;
-										cin >> UI_f_tea;
-										F_tea:if (UI_f_tea == "1")
+										UI_Stepfour_tea_1();
+										string UI_f_t1;
+										cin >> UI_f_t1;
+										for (int i = 0; i < 100; i++)
 										{
-											UI_Stepfour_tea_1();
-											string UI_f_t1;
-											cin >> UI_f_t1;
-											for (int i = 0; i < 100; i++)
-											{
-												if (stu[i].name == UI_f_t1)
-													cout << "                        " << stu[i].name << "                    " << stu[i].ID;
-											}
+											if (stu[i].name == UI_f_t1)
+												cout << "                        " << stu[i].name << "                    " << stu[i].ID;
 										}
-										else if (UI_f_tea == "2")
+										cout << "                                                      键入0返回上一级";
+										string Back_num;
+										cin >> Back_num;
+										if (Back_num == "0")
+											goto F_tea2;
+										else
 										{
-											UI_Stepfour_tea_2();
-											F_tea2:string tem_class;
-											cin >> tem_class;
-											if (tem_class == "数学")
-											{
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                                                    选择数学的学生信息" << endl;
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                  |               姓名                     学号                    数学                |" << endl;
-												for (int j = 0; j < 100; j++)
-												{
-													if (stu[j].math == true)
-													{
-														cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
-														cout << "                  |====================================================================================|" << endl;
-													}
-												}
-											}
-											else if (tem_class == "C++程序设计基础")
-											{
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                                                    选择C++的学生信息" << endl;
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                  |               姓名                     学号                    数学                |" << endl;
-												for (int j = 0; j < 100; j++)
-												{
-													if (stu[j].cpp == true)
-													{
-														cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
-														cout << "                  |====================================================================================|" << endl;
-													}
-												}
-											}
-											else if (tem_class == "英语")
-											{
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                                                    选择英语的学生信息" << endl;
-												cout << "                  |====================================================================================|" << endl;
-												cout << "                  |               姓名                     学号                    数学                |" << endl;
-												for (int j = 0; j < 100; j++)
-												{
-													if (stu[j].english == true)
-													{
-														cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
-														cout << "                  |====================================================================================|" << endl;
-													}
-												}
-											}
-											cout << "                                                      键入0返回上一级";
-											string Back_num;
-											cin >> Back_num;
-											if (Back_num == "0")
-												goto F_tea2;
-											else
-											{
-												cout << "                                                        无效输入";
-											}
+											cout << "                                                        无效输入";
 										}
-										else if (UI_f_tea == "3")
-										{
-											UI_Stepfour_tea_3(i);
-										}
-										else if (UI_f_tea == "0")
-										{
-											break;
-										}
-										//进入教师管理函数
 									}
-									else
+									else if (UI_f_tea == "2")
 									{
-										t_times--;
-										cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
-										cout << "                                                     将自动返回上级菜单";
-										Sleep(1000);
-										if (t_times == 0)
-											tea[i].lock = true;//账户锁定
+										UI_Stepfour_tea_2();
+										string tem_class;
+										cin >> tem_class;
+										if (tem_class == "数学")
+										{
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                                                     选择数学的学生信息" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                  |               姓名                     学号                    数学                |" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											for (int j = 0; j < 100; j++)
+											{
+												if (stu[j].math == 1)
+												{
+													cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
+													cout << "                  |====================================================================================|" << endl;
+												}
+											}
+										}
+										else if (tem_class == "C++程序设计基础")
+										{
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                                                     选择C++的学生信息" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                  |               姓名                     学号                    数学                |" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											for (int j = 0; j < 100; j++)
+											{
+												if (stu[j].cpp == true)
+												{
+													cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
+													cout << "                  |====================================================================================|" << endl;
+												}
+											}
+										}
+										else if (tem_class == "英语")
+										{
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                                                     选择英语的学生信息" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											cout << "                  |               姓名                     学号                    数学                |" << endl;
+											cout << "                  |====================================================================================|" << endl;
+											for (int j = 0; j < 100; j++)
+											{
+												if (stu[j].english == true)
+												{
+													cout << "                                 " << stu[j].name << "                      " << stu[j].ID << "                                已选" << endl;
+													cout << "                  |====================================================================================|" << endl;
+												}
+											}
+										}
+										cout << "                                                      键入0返回上一级";
+										string Back_num;
+										cin >> Back_num;
+										if (Back_num == "0")
+											goto F_tea2;
+										else
+										{
+											cout << "                                                        无效输入";
+										}
+									}
+									else if (UI_f_tea == "3")
+									{
+										UI_Stepfour_tea_3(i);
+									}
+									else if (UI_f_tea == "0")
+									{
 										break;
 									}
-								}
-								else if (login_t_name == "0")
-								{
-									break;
+									//进入教师管理函数
 								}
 								else
 								{
-									cout << "                                             ID输入错误，请核实信息后输入";
+									t_times--;
+									cout << "                                                  密码输入错误 ，还有" << s_times << "次机会" << endl;
+									cout << "                                                     将自动返回上级菜单";
 									Sleep(1000);
+									if (t_times == 0)
+										tea[i].lock = true;//账户锁定
 									break;
 								}
 							}
-
-							else
-								nb = 0;
-							if(nb == 0&&i == 100)
+							else if (login_t_name == "0")
 							{
-								cout << "                                             姓名输入错误，请核实信息后输入";
+								break;
+							}
+							else
+							{
+								cout << "                                             ID输入错误，请核实信息后输入";
 								Sleep(1000);
 								break;
 							}
 						}
+
+						else
+							nb = 0;
+						if (nb == 0 && i == 99)
+						{
+							cout << "                                             姓名输入错误，请核实信息后输入";
+							Sleep(1000);
+							break;
+						}
 					}
-					else if (two_tea == "2")
-					{
-						UI_Stepthree_tea_logon();
-					}
-					else if (two_tea == "0")
-					{
-						t_times = 5;
-						break;
-					}
-					else
-					{
-						cout << "无效输入，请重新输入";
-						Sleep(500);
-					}
-				
+				}
+				else if (two_tea == "2")
+				{
+					UI_Stepthree_tea_logon();
+				}
+				else if (two_tea == "0")
+				{
+					t_times = 5;
+					break;
+				}
+				else
+				{
+					cout << "无效输入，请重新输入";
+					Sleep(500);
+				}
+
 			}
 
 			else if (ID_number == "3")
@@ -930,7 +962,7 @@ int main()
 				if (adm_password == adm.Password)
 				{
 					adm_times = 3;
-					UI_Stepfour_adm();
+				F_adm:UI_Stepfour_adm();
 					string UI_Four_Num;
 					cin >> UI_Four_Num;
 					if (UI_Four_Num == "1")
@@ -939,9 +971,10 @@ int main()
 					}
 					else if (UI_Four_Num == "2")
 					{
+						ReadFiles_stu();
 						UI_Stepfour_adm_2();
 
-						F_adm2:string temp_adm_in;
+						string temp_adm_in;
 						int flag_f1 = 0, flag_f2 = 0;
 
 						cin >> temp_adm_in;
@@ -951,12 +984,12 @@ int main()
 							cout << "                  |                            姓名                      ID                            |" << endl;
 							for (int j = 0; j < 100; j++)
 							{
-								if (stu[j].math == true)
+								if (stu[j].math == 1)
 								{
 									flag_f1 = 1;
 									cout << "                                             " << stu[j].name << "                          " << stu[j].ID << endl;
 								}
-								else if (j == 100 && flag_f1 == 0)
+								if (j == 99 && flag_f1 == 0)
 								{
 									cout << "                  |====================================================================================|" << endl;
 									cout << "                                                              空" << endl;
@@ -974,7 +1007,7 @@ int main()
 									flag_f1 = 1;
 									cout << "                                             " << stu[j].name << "                          " << stu[j].ID << endl;
 								}
-								else if (j == 100 && flag_f1 == 0)
+								else if (j == 99 && flag_f1 == 0)
 								{
 									cout << "                  |====================================================================================|" << endl;
 									cout << "                                                              空" << endl;
@@ -992,7 +1025,7 @@ int main()
 									flag_f1 = 1;
 									cout << "                                             " << stu[j].name << "                          " << stu[j].ID << endl;
 								}
-								else if (j == 100 && flag_f1 == 0)
+								else if (j == 99 && flag_f1 == 0)
 								{
 									cout << "                  |====================================================================================|" << endl;
 									cout << "                                                              空" << endl;
@@ -1004,7 +1037,7 @@ int main()
 						string Back_num;
 						cin >> Back_num;
 						if (Back_num == "0")
-							goto F_adm2;
+							goto F_adm;
 						else
 						{
 							cout << "                                                        无效输入";
@@ -1012,9 +1045,11 @@ int main()
 					}
 					else if (UI_Four_Num == "3")
 					{
+						ReadFiles_stu();
+						ReadFiles_tea();
 						UI_Stepfour_adm_3();
 
-						F_adm3:string tem_adm_in;
+						string tem_adm_in;
 						int flag_f1 = 0, flag_f2 = 0;
 
 						cin >> tem_adm_in;
@@ -1028,16 +1063,16 @@ int main()
 							if (stu[i].name == tem_adm_in)
 							{
 								flag_f1 = 1;
-								cout << "                      " << stu[i].name << "                       " << stu[i].ID << endl;
+								cout << "                                                     " << stu[i].name << "                                 " << stu[i].ID << endl;
 								cout << "                  |====================================================================================|" << endl;
 							}
 							else if (stu[i].ID == tem_adm_in)
 							{
 								flag_f1 = 1;
-								cout << "                      " << stu[i].name << "                       " << stu[i].ID << endl;
+								cout << "                                                    " << stu[i].name << "                                  " << stu[i].ID << endl;
 								cout << "                  |====================================================================================|" << endl;
 							}
-							else if (flag_f1 == 0 && i == 100)
+							else if (flag_f1 == 0 && i == 99)
 								cout << "                                                      空" << endl;
 						}
 						cout << "                  |====================================================================================|" << endl;
@@ -1050,16 +1085,16 @@ int main()
 							if (tea[i].name == tem_adm_in)
 							{
 								flag_f2 = 1;
-								cout << "                      " << tea[i].name << "                       " << tea[i].ID << endl;
+								cout << "                                                    " << tea[i].name << "                                  " << tea[i].ID << endl;
 								cout << "                  |====================================================================================|" << endl;
 							}
-							else if (stu[i].ID == tem_adm_in)
+							else if (tea[i].ID == tem_adm_in)
 							{
 								flag_f2 = 1;
-								cout << "                      " << tea[i].name << "                       " << tea[i].ID << endl;
+								cout << "                                                   " << tea[i].name << "                                   " << tea[i].ID << endl;
 								cout << "                  |====================================================================================|" << endl;
 							}
-							else if (flag_f2 == 0 && i == 100)
+							else if (flag_f2 == 0 && i == 99)
 								cout << "                                                      空" << endl;
 						}
 						cout << "                  |====================================================================================|" << endl;
@@ -1067,7 +1102,7 @@ int main()
 						string Back_num;
 						cin >> Back_num;
 						if (Back_num == "0")
-							goto F_adm3;
+							goto F_adm;
 						else
 						{
 							cout << "                                                        无效输入";
@@ -1088,7 +1123,7 @@ int main()
 				else
 				{
 					adm_times--;
-					cout << "                                                  密码输入错误 ，还有"<<adm_times<< "次机会";
+					cout << "                                                  密码输入错误 ，还有" << adm_times << "次机会";
 					Sleep(1000);
 				}
 			}
