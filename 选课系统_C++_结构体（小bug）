@@ -12,6 +12,8 @@ int onenumber;//作为身份验证码
 int UI_Steptwo_one;
 int UI_Steptwo_two;
 
+//注：文件路径不一样，使用时需要修改
+
 struct student
 {
 	string s_name;
